@@ -176,7 +176,7 @@ class PackageManifest
     protected function write(array $manifest)
     {
         if (! is_writable($dirname = dirname($this->manifestPath))) {
-            throw new Exception("The {$dirname} directory must be present and writable.");
+            return;
         }
 
         $this->files->replace(

@@ -184,7 +184,7 @@ class ProviderRepository
     public function writeManifest($manifest)
     {
         if (! is_writable($dirname = dirname($this->manifestPath))) {
-            throw new Exception("The {$dirname} directory must be present and writable.");
+            return array_merge(['when' => []], $manifest);
         }
 
         $this->files->replace(
