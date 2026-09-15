@@ -30,6 +30,16 @@ class ScheduleController extends Controller
 
     public function store(Request $request)
     {
+        if ($request->has('class') && !$request->has('class_type')) {
+            $request->merge(['class_type' => $request->input('class')]);
+        }
+        if ($request->has('price') && !$request->has('base_price')) {
+            $request->merge(['base_price' => $request->input('price')]);
+        }
+        if (!$request->filled('travel_date') && $request->filled('departure_time')) {
+            $request->merge(['travel_date' => substr($request->input('departure_time'), 0, 10)]);
+        }
+
         $validated = $request->validate([
             'train_id' => 'required|exists:trains,id',
             'origin_station_id' => 'required|exists:stations,id',
@@ -37,9 +47,8 @@ class ScheduleController extends Controller
             'travel_date' => 'required|date',
             'departure_time' => 'required',
             'arrival_time' => 'required',
-            'class_type' => 'required|string',
+            'class_type' => 'required|string|in:ekonomi,bisnis,eksekutif',
             'base_price' => 'required|integer|min:1',
-            'capacity' => 'required|integer|min:1',
         ], [
             'train_id.required' => 'Kereta wajib dipilih.',
             'origin_station_id.required' => 'Stasiun asal wajib dipilih.',
@@ -51,8 +60,9 @@ class ScheduleController extends Controller
             'class_type.required' => 'Kelas wajib diisi.',
             'base_price.required' => 'Harga dasar wajib diisi.',
             'base_price.min' => 'Harga dasar minimal 1.',
-            'capacity.required' => 'Kapasitas wajib diisi.',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', true);
 
         TrainSchedule::create($validated);
 
@@ -70,6 +80,16 @@ class ScheduleController extends Controller
 
     public function update(Request $request, TrainSchedule $schedule)
     {
+        if ($request->has('class') && !$request->has('class_type')) {
+            $request->merge(['class_type' => $request->input('class')]);
+        }
+        if ($request->has('price') && !$request->has('base_price')) {
+            $request->merge(['base_price' => $request->input('price')]);
+        }
+        if (!$request->filled('travel_date') && $request->filled('departure_time')) {
+            $request->merge(['travel_date' => substr($request->input('departure_time'), 0, 10)]);
+        }
+
         $validated = $request->validate([
             'train_id' => 'required|exists:trains,id',
             'origin_station_id' => 'required|exists:stations,id',
@@ -77,9 +97,8 @@ class ScheduleController extends Controller
             'travel_date' => 'required|date',
             'departure_time' => 'required',
             'arrival_time' => 'required',
-            'class_type' => 'required|string',
+            'class_type' => 'required|string|in:ekonomi,bisnis,eksekutif',
             'base_price' => 'required|integer|min:1',
-            'capacity' => 'required|integer|min:1',
         ], [
             'train_id.required' => 'Kereta wajib dipilih.',
             'origin_station_id.required' => 'Stasiun asal wajib dipilih.',
@@ -91,8 +110,9 @@ class ScheduleController extends Controller
             'class_type.required' => 'Kelas wajib diisi.',
             'base_price.required' => 'Harga dasar wajib diisi.',
             'base_price.min' => 'Harga dasar minimal 1.',
-            'capacity.required' => 'Kapasitas wajib diisi.',
         ]);
+
+        $validated['is_active'] = $request->boolean('is_active', true);
 
         $schedule->update($validated);
 

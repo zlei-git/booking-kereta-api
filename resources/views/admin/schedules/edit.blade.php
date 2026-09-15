@@ -57,18 +57,19 @@
 
             <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label for="class" class="block text-sm font-medium text-slate-700 mb-1">Kelas</label>
-                    <select name="class" id="class" class="w-full rounded-md border-slate-300 shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
-                        <option value="ekonomi" {{ old('class', $schedule->class) == 'ekonomi' ? 'selected' : '' }}>Ekonomi</option>
-                        <option value="bisnis" {{ old('class', $schedule->class) == 'bisnis' ? 'selected' : '' }}>Bisnis</option>
-                        <option value="eksekutif" {{ old('class', $schedule->class) == 'eksekutif' ? 'selected' : '' }}>Eksekutif</option>
+                    <label for="class_type" class="block text-sm font-medium text-slate-700 mb-1">Kelas</label>
+                    <select name="class_type" id="class_type" class="w-full rounded-md border-slate-300 shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
+                        @php $selectedClass = old('class_type', old('class', $schedule->class_type ?? $schedule->class)); @endphp
+                        <option value="ekonomi" {{ $selectedClass == 'ekonomi' ? 'selected' : '' }}>Ekonomi</option>
+                        <option value="bisnis" {{ $selectedClass == 'bisnis' ? 'selected' : '' }}>Bisnis</option>
+                        <option value="eksekutif" {{ $selectedClass == 'eksekutif' ? 'selected' : '' }}>Eksekutif</option>
                     </select>
-                    @error('class') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    @error('class_type') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
                 <div>
-                    <label for="price" class="block text-sm font-medium text-slate-700 mb-1">Harga (Rp)</label>
-                    <input type="number" name="price" id="price" value="{{ old('price', $schedule->price) }}" min="0" class="w-full rounded-md border-slate-300 shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
-                    @error('price') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    <label for="base_price" class="block text-sm font-medium text-slate-700 mb-1">Harga (Rp)</label>
+                    <input type="number" name="base_price" id="base_price" value="{{ old('base_price', old('price', $schedule->base_price ?? $schedule->price)) }}" min="1" class="w-full rounded-md border-slate-300 shadow-sm focus:border-accent-500 focus:ring-accent-500" required>
+                    @error('base_price') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                 </div>
             </div>
 

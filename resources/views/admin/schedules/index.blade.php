@@ -28,8 +28,21 @@
                         <div>{{ \Carbon\Carbon::parse($schedule->departure_time)->format('d M Y') }}</div>
                         <div class="text-slate-500">{{ \Carbon\Carbon::parse($schedule->departure_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($schedule->arrival_time)->format('H:i') }}</div>
                     </td>
-                    <td class="px-6 py-4 uppercase text-xs">{{ $schedule->class }}</td>
-                    <td class="px-6 py-4">Rp{{ number_format($schedule->price, 0, ',', '.') }}</td>
+                    <td class="px-6 py-4">
+                        @php
+                            $classType = $schedule->class_type ?? $schedule->class ?? '';
+                            $badgeColor = match(strtolower($classType)) {
+                                'eksekutif' => 'bg-purple-100 text-purple-800 border border-purple-200',
+                                'bisnis' => 'bg-blue-100 text-blue-800 border border-blue-200',
+                                'ekonomi' => 'bg-emerald-100 text-emerald-800 border border-emerald-200',
+                                default => 'bg-slate-100 text-slate-800 border border-slate-200',
+                            };
+                        @endphp
+                        <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium {{ $badgeColor }}">
+                            {{ ucfirst($classType) }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-slate-900">Rp{{ number_format($schedule->base_price ?? $schedule->price, 0, ',', '.') }}</td>
                     <td class="px-6 py-4">
                         @if($schedule->is_active) <span class="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Aktif</span>
                         @else <span class="inline-flex rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">Nonaktif</span> @endif

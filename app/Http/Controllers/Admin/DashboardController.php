@@ -12,10 +12,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $paidRevenue = Payment::where('status', 'paid')->sum('amount');
+        $bookingRevenue = Booking::whereIn('status', ['confirmed', 'completed'])->sum('total_price');
+
         $stats = [
             'total_bookings' => Booking::count(),
             'today_bookings' => Booking::whereDate('created_at', today())->count(),
-            'revenue' => Payment::where('status', 'paid')->sum('amount'),
+            'revenue' => max((int)$paidRevenue, (int)$bookingRevenue),
             'pending_payments' => Payment::where('status', 'pending')->count(),
             'active_trains' => Train::where('is_active', true)->count(),
             'total_customers' => User::where('role', 'customer')->count(),

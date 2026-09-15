@@ -30,7 +30,7 @@
                 <div>
                     <div class="text-sm text-slate-500 mb-1">Kereta</div>
                     <div class="font-medium">{{ $booking->schedule->train->name ?? '-' }} ({{ $booking->schedule->train->train_number ?? '-' }})</div>
-                    <div class="text-sm text-slate-600 capitalize mt-1">{{ $booking->schedule->class }}</div>
+                    <div class="text-sm text-slate-600 capitalize mt-1">{{ $booking->schedule->class_type ?? $booking->schedule->class }}</div>
                 </div>
                 <div class="mt-4 md:mt-0 text-right md:text-left">
                     <div class="text-sm text-slate-500 mb-1">Tanggal Keberangkatan</div>

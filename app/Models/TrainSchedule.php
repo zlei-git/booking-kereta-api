@@ -82,4 +82,14 @@ class TrainSchedule extends Model
     {
         return $this->is_active && $this->getAvailableSeatsCount() > 0;
     }
+
+    public function getClassAttribute(): string
+    {
+        return $this->class_type ?? '';
+    }
+
+    public function getPriceAttribute(): int
+    {
+        return $this->base_price ?? 0;
+    }
 }
