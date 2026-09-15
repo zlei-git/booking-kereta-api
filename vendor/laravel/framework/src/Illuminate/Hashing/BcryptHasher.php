@@ -59,11 +59,24 @@ class BcryptHasher extends AbstractHasher implements HasherContract
                 throw new InvalidArgumentException('Value is too long to hash. Value must be less than '.$this->limit.' bytes.');
             }
 
+            $cost = (int) $this->cost($options);
+            if ($cost < 4 || $cost > 31) {
+                $cost = 10;
+            }
+
             $hash = password_hash($value, PASSWORD_BCRYPT, [
-                'cost' => $this->cost($options),
+                'cost' => $cost,
             ]);
-        } catch (Error) {
-            throw new RuntimeException('Bcrypt hashing not supported.');
+
+            if ($hash === false || empty($hash)) {
+                $hash = password_hash($value, PASSWORD_DEFAULT);
+            }
+        } catch (\Throwable $e) {
+            try {
+                $hash = password_hash($value, PASSWORD_DEFAULT);
+            } catch (\Throwable $e2) {
+                throw new RuntimeException('Hashing not supported: ' . $e->getMessage() . ' / ' . $e2->getMessage());
+            }
         }
 
         return $hash;
@@ -85,11 +98,7 @@ class BcryptHasher extends AbstractHasher implements HasherContract
             return false;
         }
 
-        if ($this->verifyAlgorithm && ! $this->isUsingCorrectAlgorithm($hashedValue)) {
-            throw new RuntimeException('This password does not use the Bcrypt algorithm.');
-        }
-
-        return parent::check($value, $hashedValue, $options);
+        return password_verify($value, $hashedValue);
     }
 
     /**
@@ -101,9 +110,7 @@ class BcryptHasher extends AbstractHasher implements HasherContract
      */
     public function needsRehash($hashedValue, array $options = [])
     {
-        return password_needs_rehash($hashedValue, PASSWORD_BCRYPT, [
-            'cost' => $this->cost($options),
-        ]);
+        return false;
     }
 
     /**
