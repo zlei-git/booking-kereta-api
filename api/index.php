@@ -17,6 +17,12 @@ foreach ($dirs as $dir) {
 putenv('VIEW_COMPILED_PATH=' . $tmpStorage . '/framework/views');
 putenv('APP_STORAGE=' . $tmpStorage);
 
+// Fallback APP_KEY if not set in Vercel Environment Variables
+if (!getenv('APP_KEY')) {
+    putenv('APP_KEY=base64:oXrP5Tt9EvXnIIGQd4MoFIStFPE1QJ7qMGs2oKcHVzo=');
+    $_ENV['APP_KEY'] = 'base64:oXrP5Tt9EvXnIIGQd4MoFIStFPE1QJ7qMGs2oKcHVzo=';
+}
+
 // Setup SQLite database in /tmp if not exists
 $sqliteFile = '/tmp/database.sqlite';
 if (!file_exists($sqliteFile)) {
@@ -24,5 +30,7 @@ if (!file_exists($sqliteFile)) {
 }
 putenv('DB_CONNECTION=sqlite');
 putenv('DB_DATABASE=' . $sqliteFile);
+$_ENV['DB_CONNECTION'] = 'sqlite';
+$_ENV['DB_DATABASE'] = $sqliteFile;
 
 require __DIR__ . '/../public/index.php';
