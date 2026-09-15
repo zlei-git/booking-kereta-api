@@ -49,6 +49,6 @@ class MaintenanceModeManager extends Manager
      */
     public function getDefaultDriver(): string
     {
-        return $this->config->get('app.maintenance.driver', 'file');
+        return $this->config->get('app.maintenance.driver') ?: 'file';
     }
 }

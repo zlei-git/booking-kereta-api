@@ -92,6 +92,10 @@ abstract class Manager
      */
     protected function createDriver($driver)
     {
+        if (empty($driver)) {
+            $driver = $this->getDefaultDriver() ?: 'file';
+        }
+
         // First, we will determine if a custom driver creator exists for the given driver and
         // if it does not we will check for a creator method for the driver. Custom creator
         // callbacks allow developers to build their own "drivers" easily using Closures.
