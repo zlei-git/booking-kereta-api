@@ -46,6 +46,7 @@
     "APP_EVENTS_CACHE": "/tmp/storage/framework/cache/events.php",
     "APP_MAINTENANCE_DRIVER": "file",
     "APP_NAME": "NusaRail",
-    "SESSION_COOKIE": "nusarail_session"
+    "SESSION_COOKIE": "nusarail_session",
+    "SESSION_LIFETIME": "120"
   }
 }

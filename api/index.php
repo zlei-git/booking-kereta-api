@@ -30,6 +30,7 @@ putenv('APP_MAINTENANCE_DRIVER=file');
 putenv('APP_NAME=NusaRail');
 putenv('SESSION_COOKIE=nusarail_session');
 putenv('SESSION_DRIVER=file');
+putenv('SESSION_LIFETIME=120');
 
 $_ENV['VIEW_COMPILED_PATH'] = $tmpStorage . '/framework/views';
 $_ENV['APP_STORAGE'] = $tmpStorage;
@@ -42,6 +43,7 @@ $_ENV['APP_MAINTENANCE_DRIVER'] = 'file';
 $_ENV['APP_NAME'] = 'NusaRail';
 $_ENV['SESSION_COOKIE'] = 'nusarail_session';
 $_ENV['SESSION_DRIVER'] = 'file';
+$_ENV['SESSION_LIFETIME'] = '120';
 
 // Fallback APP_KEY if not set in Vercel Environment Variables
 if (!getenv('APP_KEY')) {
