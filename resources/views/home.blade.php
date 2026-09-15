@@ -51,8 +51,13 @@
     class="relative w-full overflow-hidden bg-[#121212] text-white min-h-[440px] sm:min-h-[500px] lg:min-h-[560px] flex items-end border-b border-[#2C2A26]">
 
         <!-- Slides Background Images with Smooth Crossfade -->
-        <template x-for="(slide, index) in slides" :key="index">
-            <div x-show="active === index"
+        @foreach ([
+            ['image' => asset('images/slider/hero_scenic_train.jpg'), 'title' => 'Pesona Lanskap Alam Nusantara di Setiap Rel'],
+            ['image' => asset('images/slider/hero_service_hospitality.jpg'), 'title' => 'Pelayanan Ramah & Berkelas Sepanjang Perjalanan'],
+            ['image' => asset('images/slider/hero_cabin_comfort.jpg'), 'title' => 'Ketenangan & Privasi Ruang Duduk Ergonomis'],
+            ['image' => asset('images/slider/hero_station_sunset.jpg'), 'title' => 'Konektivitas 16 Stasiun & Keberangkatan Teratur']
+        ] as $index => $slideItem)
+            <div x-show="active === {{ $index }}"
                  x-transition:enter="transition ease-out duration-700"
                  x-transition:enter-start="opacity-0 scale-105"
                  x-transition:enter-end="opacity-100 scale-100"
@@ -60,11 +65,11 @@
                  x-transition:leave-start="opacity-100 scale-100"
                  x-transition:leave-end="opacity-0 scale-100"
                  class="absolute inset-0 w-full h-full">
-                <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover object-center">
+                <img src="{{ $slideItem['image'] }}" alt="{{ $slideItem['title'] }}" class="w-full h-full object-cover object-center" loading="eager" fetchpriority="high">
                 <!-- Obsidian scrim overlay matching NordicRail theme -->
                 <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-black/65 to-black/35 sm:bg-gradient-to-r sm:from-black/90 sm:via-black/65 sm:to-black/30"></div>
             </div>
-        </template>
+        @endforeach
 
         <!-- Slide Content Container -->
         <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-14 sm:pb-16">
