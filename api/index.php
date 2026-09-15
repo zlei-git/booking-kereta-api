@@ -29,6 +29,7 @@ putenv('APP_EVENTS_CACHE=' . $tmpStorage . '/framework/cache/events.php');
 putenv('APP_MAINTENANCE_DRIVER=file');
 putenv('APP_NAME=NusaRail');
 putenv('SESSION_COOKIE=nusarail_session');
+putenv('SESSION_DRIVER=file');
 
 $_ENV['VIEW_COMPILED_PATH'] = $tmpStorage . '/framework/views';
 $_ENV['APP_STORAGE'] = $tmpStorage;
@@ -40,6 +41,7 @@ $_ENV['APP_EVENTS_CACHE'] = $tmpStorage . '/framework/cache/events.php';
 $_ENV['APP_MAINTENANCE_DRIVER'] = 'file';
 $_ENV['APP_NAME'] = 'NusaRail';
 $_ENV['SESSION_COOKIE'] = 'nusarail_session';
+$_ENV['SESSION_DRIVER'] = 'file';
 
 // Fallback APP_KEY if not set in Vercel Environment Variables
 if (!getenv('APP_KEY')) {
