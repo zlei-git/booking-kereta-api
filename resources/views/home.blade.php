@@ -64,10 +64,10 @@
                  x-transition:leave="transition ease-in duration-500"
                  x-transition:leave-start="opacity-100 scale-100"
                  x-transition:leave-end="opacity-0 scale-100"
-                 class="absolute inset-0 w-full h-full">
-                <img src="{{ $slideItem['image'] }}" alt="{{ $slideItem['title'] }}" class="w-full h-full object-cover object-center" loading="eager" fetchpriority="high">
-                <!-- Obsidian scrim overlay matching NordicRail theme -->
-                <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-black/65 to-black/35 sm:bg-gradient-to-r sm:from-black/90 sm:via-black/65 sm:to-black/30"></div>
+                 class="absolute inset-0 w-full h-full bg-cover bg-center"
+                 style="background-image: url('{{ $slideItem['image'] }}');">
+                <!-- Balanced scrim overlay: text remains readable while background photos pop clearly -->
+                <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-black/40 to-black/20 sm:bg-gradient-to-r sm:from-black/75 sm:via-black/40 sm:to-black/10"></div>
             </div>
         @endforeach
 
