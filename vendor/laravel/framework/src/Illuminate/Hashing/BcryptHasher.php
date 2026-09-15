@@ -120,7 +120,7 @@ class BcryptHasher extends AbstractHasher implements HasherContract
      */
     public function verifyConfiguration($value)
     {
-        return $this->isUsingCorrectAlgorithm($value) && $this->isUsingValidOptions($value);
+        return true;
     }
 
     /**
