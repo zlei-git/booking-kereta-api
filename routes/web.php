@@ -24,6 +24,9 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Admin\CustomerController as AdminCustomerController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
 
+// Health check route for Render & monitors
+Route::get('/healthz', fn() => response('OK', 200));
+
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/search', [SearchController::class, 'index'])->name('search');
