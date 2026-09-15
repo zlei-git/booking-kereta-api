@@ -15,7 +15,7 @@ $dirs = [
 
 foreach ($dirs as $dir) {
     if (!is_dir($dir)) {
-        @mkdir($dir, 0755, true);
+        @mkdir($dir, 0777, true);
     }
 }
 
@@ -54,5 +54,9 @@ try {
     header('Content-Type: text/plain');
     echo "Fatal Error: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n\n";
+    if ($prev = $e->getPrevious()) {
+        echo "Caused By: " . $prev->getMessage() . "\n";
+        echo "File: " . $prev->getFile() . ":" . $prev->getLine() . "\n\n";
+    }
     echo $e->getTraceAsString();
 }
