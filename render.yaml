@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: nusarail-booking
+    env: php
+    plan: free
+    region: singapore
+    buildCommand: "composer install --no-dev --optimize-autoloader && npm ci && npm run build && php artisan config:clear"
+    startCommand: "php artisan migrate --force && php artisan db:seed --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        value: base64:oXrP5Tt9EvXnIIGQd4MoFIStFPE1QJ7qMGs2oKcHVzo=
+      - key: APP_URL
+        value: https://nusarail-booking.onrender.com
+      - key: DB_CONNECTION
+        value: sqlite
+      - key: SESSION_DRIVER
+        value: file
+      - key: CACHE_STORE
+        value: file
+      - key: QUEUE_CONNECTION
+        value: sync
