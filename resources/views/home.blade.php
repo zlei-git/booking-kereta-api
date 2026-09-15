@@ -64,10 +64,10 @@
                  x-transition:leave="transition ease-in duration-500"
                  x-transition:leave-start="opacity-100 scale-100"
                  x-transition:leave-end="opacity-0 scale-100"
-                 class="absolute inset-0 w-full h-full bg-cover bg-center"
-                 style="background-image: url('{{ $slideItem['image'] }}');">
-                <!-- Balanced scrim overlay: text remains readable while background photos pop clearly -->
-                <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-black/40 to-black/20 sm:bg-gradient-to-r sm:from-black/75 sm:via-black/40 sm:to-black/10"></div>
+                 class="absolute inset-0 w-full h-full overflow-hidden">
+                <img src="{{ $slideItem['image'] }}" alt="{{ $slideItem['title'] }}" class="w-full h-full object-cover object-center" loading="eager" decoding="sync">
+                <!-- Light soft scrim overlay so images remain vivid while text is perfectly legible -->
+                <div class="absolute inset-0 bg-gradient-to-t from-[#121212]/90 via-black/30 to-transparent sm:bg-gradient-to-r sm:from-black/75 sm:via-black/35 sm:to-transparent"></div>
             </div>
         @endforeach
 
