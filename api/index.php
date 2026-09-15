@@ -23,11 +23,18 @@ if (!getenv('APP_KEY')) {
     $_ENV['APP_KEY'] = 'base64:oXrP5Tt9EvXnIIGQd4MoFIStFPE1QJ7qMGs2oKcHVzo=';
 }
 
-// Setup SQLite database in /tmp if not exists
+// Setup SQLite database in /tmp from pre-seeded database
 $sqliteFile = '/tmp/database.sqlite';
+$bundledDb = __DIR__ . '/../database/database.sqlite';
+
 if (!file_exists($sqliteFile)) {
-    touch($sqliteFile);
+    if (file_exists($bundledDb)) {
+        copy($bundledDb, $sqliteFile);
+    } else {
+        touch($sqliteFile);
+    }
 }
+
 putenv('DB_CONNECTION=sqlite');
 putenv('DB_DATABASE=' . $sqliteFile);
 $_ENV['DB_CONNECTION'] = 'sqlite';
