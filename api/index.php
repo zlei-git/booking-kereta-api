@@ -55,7 +55,7 @@ if (!getenv('APP_KEY')) {
 $sqliteFile = '/tmp/database.sqlite';
 $bundledDb = __DIR__ . '/../database/database.sqlite';
 
-if (!file_exists($sqliteFile)) {
+if (!file_exists($sqliteFile) || (file_exists($bundledDb) && filemtime($bundledDb) > filemtime($sqliteFile))) {
     if (file_exists($bundledDb)) {
         copy($bundledDb, $sqliteFile);
     } else {

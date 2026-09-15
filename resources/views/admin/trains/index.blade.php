@@ -24,14 +24,31 @@
                     <td class="px-6 py-4 font-medium text-slate-900">{{ $train->name }}</td>
                     <td class="px-6 py-4">{{ $train->train_number }}</td>
                     <td class="px-6 py-4">
-                        @foreach($train->classes ?? [] as $class)
-                            <span class="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-800 mr-1">{{ ucfirst($class) }}</span>
-                        @endforeach
+                        <div class="flex flex-wrap gap-1">
+                            @foreach($train->classes ?? [] as $class)
+                                @php
+                                    $classType = is_object($class) ? ($class->class_type ?? '') : $class;
+                                    $badgeColor = match(strtolower($classType)) {
+                                        'eksekutif' => 'bg-purple-100 text-purple-800 border border-purple-200',
+                                        'bisnis' => 'bg-blue-100 text-blue-800 border border-blue-200',
+                                        'ekonomi' => 'bg-emerald-100 text-emerald-800 border border-emerald-200',
+                                        default => 'bg-slate-100 text-slate-800 border border-slate-200',
+                                    };
+                                @endphp
+                                <span class="inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium {{ $badgeColor }}">
+                                    {{ ucfirst($classType) }}
+                                </span>
+                            @endforeach
+                        </div>
                     </td>
                     <td class="px-6 py-4">
-                        @foreach($train->facilities ?? [] as $facility)
-                            <span class="inline-flex rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 mr-1">{{ ucfirst(str_replace('_', ' ', $facility)) }}</span>
-                        @endforeach
+                        <div class="flex flex-wrap gap-1 max-w-xs">
+                            @foreach($train->facilities ?? [] as $facility)
+                                <span class="inline-flex rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-700 border border-slate-200 whitespace-nowrap">
+                                    {{ ucfirst(str_replace('_', ' ', $facility)) }}
+                                </span>
+                            @endforeach
+                        </div>
                     </td>
                     <td class="px-6 py-4">
                         @if($train->is_active) <span class="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Aktif</span>
