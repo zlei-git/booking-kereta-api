@@ -1100,7 +1100,7 @@ class Handler implements ExceptionHandlerContract
                 $response->getTargetUrl(), $response->getStatusCode(), $response->headers->all()
             );
         } else {
-            $response = response(
+            $response = new \Illuminate\Http\Response(
                 $response->getContent(), $response->getStatusCode(), $response->headers->all()
             );
         }
